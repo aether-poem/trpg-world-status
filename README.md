@@ -1,5 +1,7 @@
 # TRPG World Status
 
+> This is a historical prototype. Its combined-stack and `.ws` integration instructions describe an earlier runtime and have not been verified against the current Backend Core and separate QQ Bot. For the current architecture, see [Backend Core](https://github.com/aether-poem/backend-core) and [QQ Bot](https://github.com/aether-poem/aether-poem-qq-bot).
+
 TRPG World Status is a web-based narrative processing tool for converting
 English prose into a structured tabletop role-playing game world state.
 
@@ -74,7 +76,7 @@ Clone both source repositories:
 
 ```powershell
 git clone https://github.com/aether-poem/trpg-world-status.git E:\AllenNLP\backend
-git clone https://github.com/aether-poem/backend_core.git E:\AllenNLP\backend_core
+git clone https://github.com/aether-poem/backend-core.git E:\AllenNLP\backend_core
 ```
 
 ### 2. Install both applications
@@ -128,7 +130,7 @@ Individual development commands remain available:
 ```powershell
 # terminal 1: authoritative runtime
 cd E:\AllenNLP\backend_core
-python scripts/run_server.py --host 127.0.0.1 --port 8080 --seed 2026
+python -m src.server_cli --host 127.0.0.1 --port 8080 --seed 2026
 
 # terminal 2: World Status web app
 cd E:\AllenNLP\backend
