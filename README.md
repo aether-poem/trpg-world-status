@@ -22,7 +22,7 @@ structures.
 This repository is the **adaptation and browser layer** of a two-repository
 system. It converts literary prose into a playable World Status JSON and
 provides the designer/player interface. The companion
-[`aether-poem/event_generator`](https://github.com/aether-poem/event_generator)
+[`aether-poem/backend-core`](https://github.com/aether-poem/backend-core)
 repository is the **authoritative runtime layer**: it owns sessions, dice,
 committed events, world-state versions, QQ chat bindings, and the immutable
 session ledger.
@@ -31,7 +31,7 @@ session ledger.
 Literary source
   -> character analysis and World Status generation (this repository)
   -> validated World Status JSON
-  -> authoritative session (event_generator)
+  -> authoritative session (backend_core)
   -> browser actions or QQ commands
   -> deterministic dice adjudication
   -> committed event and new world-state version
@@ -41,7 +41,7 @@ Literary source
 The browser and QQ are two clients of the same runtime session. They are not
 separate games. The browser is used to build/import the module, start a session,
 inspect the literary structure, and export artifacts. QQ is used as a familiar
-group-play interface. Only `event_generator` is allowed to commit authoritative
+group-play interface. Only `backend_core` is allowed to commit authoritative
 state changes.
 
 ### Component map
@@ -65,7 +65,7 @@ NapCat directory and runtime data can live beside them:
 ```text
 E:\AllenNLP\
 |-- backend\                 # this repository
-|-- eventgenerator\          # aether-poem/event_generator
+|-- backend_core\          # aether-poem/backend_core
 |-- NapCatQQ\                # optional local NapCat/QQ installation
 `-- runtime-data\            # generated SQLite data and logs
 ```
@@ -73,8 +73,8 @@ E:\AllenNLP\
 Clone both source repositories:
 
 ```powershell
-git clone https://github.com/aether-poem/TRPG-World-Status.git E:\AllenNLP\backend
-git clone https://github.com/aether-poem/event_generator.git E:\AllenNLP\eventgenerator
+git clone https://github.com/aether-poem/trpg-world-status.git E:\AllenNLP\backend
+git clone https://github.com/aether-poem/backend_core.git E:\AllenNLP\backend_core
 ```
 
 ### 2. Install both applications
@@ -83,7 +83,7 @@ git clone https://github.com/aether-poem/event_generator.git E:\AllenNLP\eventge
 cd E:\AllenNLP\backend
 python -m pip install -r requirements.txt
 
-cd E:\AllenNLP\eventgenerator
+cd E:\AllenNLP\backend_core
 python -m pip install -e ".[dev]"
 ```
 
@@ -127,15 +127,15 @@ Individual development commands remain available:
 
 ```powershell
 # terminal 1: authoritative runtime
-cd E:\AllenNLP\eventgenerator
-python run_server.py --host 127.0.0.1 --port 8080 --seed 2026
+cd E:\AllenNLP\backend_core
+python scripts/run_server.py --host 127.0.0.1 --port 8080 --seed 2026
 
 # terminal 2: World Status web app
 cd E:\AllenNLP\backend
 python -m uvicorn app:app --host 127.0.0.1 --port 8000
 
 # terminal 3: QQ adapter
-cd E:\AllenNLP\eventgenerator
+cd E:\AllenNLP\backend_core
 python -m src.qq_adapter_cli
 ```
 
